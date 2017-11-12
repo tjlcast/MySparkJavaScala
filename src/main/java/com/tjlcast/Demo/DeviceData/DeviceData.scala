@@ -1,4 +1,4 @@
-package com.tjlcast.Demo
+package com.tjlcast.Demo.DeviceData
 
 /**
   * Created by tangjialiang on 2017/11/12.
@@ -7,16 +7,16 @@ package com.tjlcast.Demo
 
 
 import java.text.SimpleDateFormat
-import java.util.{Date, Properties}
 import java.util.concurrent.Future
+import java.util.{Date, Properties}
 
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord, RecordMetadata}
-import org.apache.spark.streaming.kafka010.LocationStrategies.PreferConsistent
-import org.apache.spark.streaming.kafka010.ConsumerStrategies.Subscribe
 import org.apache.kafka.common.serialization.{StringDeserializer, StringSerializer}
 import org.apache.spark.SparkConf
 import org.apache.spark.broadcast.Broadcast
+import org.apache.spark.streaming.kafka010.ConsumerStrategies.Subscribe
 import org.apache.spark.streaming.kafka010.KafkaUtils
+import org.apache.spark.streaming.kafka010.LocationStrategies.PreferConsistent
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
 import scala.util.parsing.json.JSON

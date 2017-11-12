@@ -1,4 +1,4 @@
-package com.tjlcast.Demo
+package com.tjlcast.Demo.WordCount
 
 import org.apache.spark.SparkConf
 import org.apache.spark.streaming.{Seconds, StreamingContext}

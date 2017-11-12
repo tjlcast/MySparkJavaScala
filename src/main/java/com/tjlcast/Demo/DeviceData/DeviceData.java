@@ -1,4 +1,4 @@
-package com.tjlcast.Demo;
+package com.tjlcast.Demo.DeviceData;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -28,7 +28,7 @@ import java.util.Properties;
  * mapToPair and map
  * DStream and rdd
  */
-public class DeviceData {
+public class DeviceDataJava {
     public static void main(String[] args) {
         SparkConf deviceData = new SparkConf().setMaster("local[2]").setAppName("DeviceData");
         JavaStreamingContext javaStreamingContext = new JavaStreamingContext(deviceData, new Duration(1000));
