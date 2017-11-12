@@ -7,7 +7,7 @@ import org.apache.spark.streaming.{Seconds, StreamingContext}
   * Created by tangjialiang on 2017/11/11.
   */
 
-object WordCount_scala {
+object WordCountStream_scala {
     def main(args: Array[String]): Unit = {
         val sparkConf = new SparkConf().setMaster("spark://10.108.219.61:7077").setAppName("myWordCount")
         val ssc = new StreamingContext(sparkConf, Seconds(1))

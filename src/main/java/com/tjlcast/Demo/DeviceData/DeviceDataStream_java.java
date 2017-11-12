@@ -28,7 +28,7 @@ import java.util.Properties;
  * mapToPair and map
  * DStream and rdd
  */
-public class DeviceDataJava {
+public class DeviceDataStream_java {
     public static void main(String[] args) {
         SparkConf deviceData = new SparkConf().setMaster("local[2]").setAppName("DeviceData");
         JavaStreamingContext javaStreamingContext = new JavaStreamingContext(deviceData, new Duration(1000));
@@ -112,39 +112,42 @@ public class DeviceDataJava {
             System.err.println(e);
         }
     }
-}
 
+    // 因为数据域问题，写为内部类
+    static class KafkaSink<K, V> {
 
-class KafkaSink<K, V> {
+        private KafkaProducer<K, V> producer = null ;
 
-    private KafkaProducer<K, V> producer = null ;
-
-    private Properties getKafkaConfig() {
-        Properties conf = new Properties() ;
-        conf.setProperty("bootstrap.servers", "10.108.219.61:9092") ;
-        conf.setProperty("key.serializer", StringSerializer.class.getName()) ;
-        conf.setProperty("value.serializer", StringSerializer.class.getName()) ;
-        return conf ;
-    }
-
-    private KafkaProducer<K, V> createProducer() {
-        Properties kafkaConfig = getKafkaConfig();
-        KafkaProducer<K, V> kvKafkaProducer = new KafkaProducer<>(kafkaConfig);
-        return kvKafkaProducer ;
-    }
-
-    private KafkaProducer<K, V> getProducer() {
-        if (producer == null) {
-            producer = createProducer() ;
+        private Properties getKafkaConfig() {
+            Properties conf = new Properties() ;
+            conf.setProperty("bootstrap.servers", "10.108.219.61:9092") ;
+            conf.setProperty("key.serializer", StringSerializer.class.getName()) ;
+            conf.setProperty("value.serializer", StringSerializer.class.getName()) ;
+            return conf ;
         }
-        return producer ;
-    }
 
-    public void send(String topic, K key, V value) {
-        getProducer().send(new ProducerRecord<K, V>(topic, key, value)) ;
-    }
+        private KafkaProducer<K, V> createProducer() {
+            Properties kafkaConfig = getKafkaConfig();
+            KafkaProducer<K, V> kvKafkaProducer = new KafkaProducer<>(kafkaConfig);
+            return kvKafkaProducer ;
+        }
 
-    public void send(String topic, V value) {
-        getProducer().send(new ProducerRecord<K, V>(topic, value)) ;
+        private KafkaProducer<K, V> getProducer() {
+            if (producer == null) {
+                producer = createProducer() ;
+            }
+            return producer ;
+        }
+
+        public void send(String topic, K key, V value) {
+            getProducer().send(new ProducerRecord<K, V>(topic, key, value)) ;
+        }
+
+        public void send(String topic, V value) {
+            getProducer().send(new ProducerRecord<K, V>(topic, value)) ;
+        }
     }
 }
+
+
+

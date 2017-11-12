@@ -14,9 +14,9 @@ import java.util.Iterator;
  *
  */
 
-public class WordCount {
+public class WordCountStream_java {
     public static void main(String[] args) {
-        System.out.println("WordCount is starting") ;
+        System.out.println("WordCountStream_java is starting") ;
 
         SparkConf sparkConf = new SparkConf() ;
         sparkConf.setMaster("local[2]") ;
