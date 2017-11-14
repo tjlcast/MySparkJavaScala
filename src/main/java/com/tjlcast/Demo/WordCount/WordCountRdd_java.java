@@ -10,6 +10,7 @@ import scala.Tuple2;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,9 +24,10 @@ public class WordCountRdd_java {
         JavaSparkContext sc = new JavaSparkContext(sparkconfig);
 
         // data source
-        String filePath = "" ;
+
+        String filePath = "file:///Users/tangjialiang/IdeaProjects/MySparkJavaScala/out/artifacts/MySparkJavaScala_jar/data.txt" ;
         int minPartitions = 3 ;
-        JavaRDD<String> stringRDD = sc.textFile(filePath);
+        JavaRDD<String> stringRDD = sc.textFile(filePath, minPartitions);
 
         JavaPairRDD<String, Integer> word_count = stringRDD.flatMap(line -> (Iterator<String>) Arrays.asList(line.split(" ")))
                 .mapToPair(word -> new Tuple2<String, Integer>(word, 1))
@@ -40,5 +42,7 @@ public class WordCountRdd_java {
 
             System.out.format("the number of \"%s\" is %d\n", key, value.toString()) ;
         }
+
+        sc.stop();
     }
 }
